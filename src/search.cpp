@@ -143,6 +143,7 @@ constexpr int futility_move_count(bool improving, Depth depth) {
 constexpr Value to_static_eval(const Value v) {
     return std::clamp(int(v), VALUE_TB_LOSS_IN_MAX_PLY + 1, VALUE_TB_WIN_IN_MAX_PLY - 1);
 }
+
 // History and stats update bonus, based on depth
 int stat_bonus(Depth d) {
     return std::min(200 * d - 100, 2000);
