@@ -149,9 +149,14 @@ void init(OptionsMap& o) {
     o["NNUE StrategyPositionalWeight"] 
         << Option(0, -12, 12, on_strategy_positional_weight); // Positional weight adjustment.
 
-    o["Exploration Factor"] << Option(0.2, 0.0, 3.0); // Exploration factor adjustment.
-    o["Exploration Decay Factor"] << Option(1.0, 0.1, 5.0, [](const Option& opt) {
-        Search::exploration_decay_factor = opt; // Update the global value.
+    // Exploration Factor (now uses 0-30 and is divided by 10 in code)
+    o["Exploration Factor"] << Option(2, 0, 30, [](const Option& v) { 
+        Search::exploration_factor = float(int(v)) / 10.0;
+});
+
+    // Exploration Decay Factor (now uses 1-50 and is divided by 10 in code)
+    o["Exploration Decay Factor"] << Option(10, 1, 50, [](const Option& v) { 
+        Search::exploration_decay_factor = float(int(v)) / 10.0;
 });
 
     o["Dynamic Exploration"] << Option(true, [](const Option& opt) { // Toggle for dynamic exploration.
